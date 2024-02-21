@@ -1,6 +1,7 @@
 package main
 
 import (
+	"hash/adler32"
 	"unicode"
 )
 
@@ -44,8 +45,15 @@ func eatwhitespace(input []rune, whitespace string) []rune {
 	return input
 }
 
+func input() {
 
-func 
+}
+
+func lan(int, []Token) {
+	if len(input) == 0 {
+		return
+	}
+}
 
 func lexToken(input []rune) *Token {
 	if len(input) == 0 {
