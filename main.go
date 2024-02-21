@@ -37,6 +37,13 @@ func tokenize(input string) []Token {
 	return tokens
 }
 
+func eatwhitespace(input []rune, whitespace string) []rune {
+	for len(input) > 0 && unicode.IsSpace(input[0]) {
+		input = input[1:]
+	}
+	return input
+}
+
 func lexToken(input []rune) *Token {
 	if len(input) == 0 {
 		return nil
