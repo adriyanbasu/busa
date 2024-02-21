@@ -1,92 +1,21 @@
 package main
 
 import (
-	"hash/adler32"
-	"unicode"
+	"fmt"
+	"log"
+	"net/http"
 )
 
-type Token struct {
-	value  string
-	kind   TokenKind
-	length int
-}
+func main() {
 
-type TokenKind int
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, r.URL.Path[1:])
+	})
 
-const (
-	Unknown TokenKind = iota
-	Number
-	Operator
-	Identifier
-	String
-	Whitespace
-	EOF
-	Error
-	Comment
-	Keyword
-	Symbol
-	Punctuator
-	UnknownPunctuator
-	KeywordPunctuator
-	SymbolPunctuator
-	WhitespacePunctuator
-)
+	http.HandleFunc("/hi", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "Hi")
+	})
 
-func tokenize(input string) []Token {
-	tokens := lex([]rune(input))
-	tokens = append(tokens, Token{value: "EOF", kind: EOF, length: 0})
-	return tokens
-}
+	log.Fatal(http.ListenAndServe(":8081", nil))
 
-func eatwhitespace(input []rune, whitespace string) []rune {
-	for len(input) > 0 && unicode.IsSpace(input[0]) {
-		input = input[1:]
-	}
-	return input
-}
-
-func input() {
-
-}
-
-func lan(int, []Token) {
-	if len(input) == 0 {
-		return
-	}
-}
-
-func lexToken(input []rune) *Token {
-	if len(input) == 0 {
-		return nil
-	}
-	if unicode.IsSpace(input[0]) {
-		return &Token{
-			value:  " ",
-			length: 1,
-		}
-	}
-	return nil
-}
-
-func lex(input []rune) (tokens []Token) {
-	curser := 0
-	for len(input) > 0 {
-		token := lexToken(input)
-		if token != nil {
-			tokens = append(tokens, *token)
-			input = input[token.length:]
-			curser += token.length
-			continue
-		}
-		if len(input) == 0 {
-			break
-		}
-		tokens = append(tokens, Token{
-			value:  string(input[0]),
-			length: 1,
-		})
-		input = input[token.length:]
-		curser += token.length
-	}
-	return tokens
 }

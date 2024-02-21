@@ -8,6 +8,9 @@
       "name": "Run",
       "command": "go run main.go",
       "runAtStart": true,
+      "preview": {
+        "port": 8081
+      },
       "restartOn": {
         "files": [
           "./main.go"
