@@ -44,6 +44,9 @@ func eatwhitespace(input []rune, whitespace string) []rune {
 	return input
 }
 
+
+func 
+
 func lexToken(input []rune) *Token {
 	if len(input) == 0 {
 		return nil
